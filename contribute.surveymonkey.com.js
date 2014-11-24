@@ -1,28 +1,34 @@
-var ME = '[SM patch]',
-    target,
-    GAME_PATH = '/instant_win/play/',
-    path = window.location.pathname;
+(function() {
+  var ME = '[SM patch v0.2]',
+      el, href,
+      GAME_PATH = '/instant_win/play/',
+      HOME_PATH = '/home',
+      GAME_CLICK_DELAY_1 = 2000,
+      GAME_CLICK_DELAY_2 = 9000,
+      path = window.location.pathname;
 
-// from http://stackoverflow.com/a/6158160/203790 because DOM element .click() won't work
-function simulatedClick(target, options) {
-  var event = target.ownerDocument.createEvent('MouseEvents');
-  event.initMouseEvent('click', true, true, target.ownerDocument.defaultView);
-  console.log(ME, 'FIRE', target);
-  target.dispatchEvent(event);
-}
+  // from http://stackoverflow.com/a/6158160/203790 because DOM element .click() won't work
+  var simulatedClick = function(el) {
+    var event = el.ownerDocument.createEvent('MouseEvents');
+    event.initMouseEvent('click', true, true, el.ownerDocument.defaultView);
+    el.dispatchEvent(event);
+  };
 
-if (path == '/home') {
-  target = $('a[href^="'+GAME_PATH+'"').attr('href');
-  console.log(ME, '[home]', 'game at ', target);
-  if (target) {
-    window.location.href = target;
+  if (path == HOME_PATH) {
+    el = document.querySelectorAll('a[href^="'+GAME_PATH+'"');
+    href = el.length ? el[0].getAttribute('href') : null;
+    console.log(ME, '['+HOME_PATH+'] at', href);
+    if (href) {
+      window.location.href = href;
+    }
+  } else if (path.indexOf(GAME_PATH) == 0) {
+    // hacky use of pauses and click events but seems to work...
+    el = document.querySelectorAll('#myCanvas');
+    el = el.length ? el[0] : null;
+    console.log(ME, '['+GAME_PATH+'] at', el);
+    if (el) {
+      setTimeout(function() { console.log(ME, 'click #1', el); simulatedClick(el); }, GAME_CLICK_DELAY_1);
+      setTimeout(function() { console.log(ME, 'click #2', el); simulatedClick(el); }, GAME_CLICK_DELAY_2);
+    }
   }
-} else if (path.indexOf(GAME_PATH) == 0) {
-  console.log(ME, '[game]');
-  // hacky use of pauses and click events but seems to work...
-  target = $('#myCanvas')[0];
-  if (target) {
-    setTimeout(function() { console.log(ME, 'first click', target); simulatedClick(target); }, 1000);
-    setTimeout(function() { console.log(ME, 'second click', target); simulatedClick(target); }, 8000);
-  }
-}
+})();
