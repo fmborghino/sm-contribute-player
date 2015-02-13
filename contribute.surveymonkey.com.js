@@ -1,10 +1,10 @@
 (function() {
-  var ME = '[SM patch v0.2]',
+  var ME = '[SM patch v0.3]',
       el, href,
       GAME_PATH = '/instant_win/play/',
       HOME_PATH = '/home',
-      GAME_CLICK_DELAY_1 = 2000,
-      GAME_CLICK_DELAY_2 = 9000,
+      CLICK_DELAY_1 = 1000,
+      CLICK_DELAY_2 = 7000,
       path = window.location.pathname;
 
   // from http://stackoverflow.com/a/6158160/203790 because DOM element .click() won't work
@@ -22,13 +22,26 @@
       window.location.href = href;
     }
   } else if (path.indexOf(GAME_PATH) == 0) {
-    // hacky use of pauses and click events but seems to work...
-    el = document.querySelectorAll('#myCanvas');
-    el = el.length ? el[0] : null;
-    console.log(ME, '['+GAME_PATH+'] at', el);
-    if (el) {
-      setTimeout(function() { console.log(ME, 'click #1', el); simulatedClick(el); }, GAME_CLICK_DELAY_1);
-      setTimeout(function() { console.log(ME, 'click #2', el); simulatedClick(el); }, GAME_CLICK_DELAY_2);
-    }
+    // horrible use of pauses and click events...
+    setTimeout(function() {
+      play = document.querySelectorAll('#SvgjsImage1011');
+      play = play.length ? play[0] : null;
+      console.log(ME, '['+GAME_PATH+'] [play] at', play);
+      if (play) {
+        setTimeout(function() {
+          console.log(ME, '[play] click #1', play);
+          simulatedClick(play);
+          setTimeout(function() {
+            nxt = document.querySelectorAll('#SvgjsImage1017');
+            nxt = nxt.length ? nxt[0] : null;
+            console.log(ME, '['+GAME_PATH+'] [next] at', nxt);
+            if(nxt) {
+              console.log(ME, '[next] click #2', nxt);
+              simulatedClick(nxt);
+            }
+          }, CLICK_DELAY_2);
+        }, CLICK_DELAY_1);
+      }
+    }, CLICK_DELAY_1);
   }
 })();
