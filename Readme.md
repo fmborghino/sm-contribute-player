@@ -1,7 +1,7 @@
 What's going on here?
 =====================
 
-A dotjs script to play your sweepstakes games at [SurveyMonkey
+A js script to play your sweepstakes games at [SurveyMonkey
 Contribute](https://contribute.surveymonkey.com/home).
 
 Turns out you can accumulate a lot of games, and playing them
@@ -12,9 +12,16 @@ I've never seen it :)
 Setup
 -----
 
- - Drop the js file into your ```~/.js/``` directory
- - Setup this [https://github.com/defunkt/dotjs](https://github.com/defunkt/dotjs)
- - Visit here to start [SurveyMonkey
+The runs in the context of a script injector on your browser.
+
+A good one currently for Chrome is
+[CJS](https://chrome.google.com/webstore/detail/custom-javascript-for-web/poakhlngfciodnhlhhgnaaelnpjljija).
+
+An alternative (no longer maintained) is
+[dotjs](https://github.com/defunkt/dotjs). This requires more setup than
+CJS.
+
+Once your injector is setup, visit here to start [SurveyMonkey
 Contribute](https://contribute.surveymonkey.com/home)
 
-This is essentially scraping, so it's gonna break.
+Note this is essentially scraping, so it's gonna break.
